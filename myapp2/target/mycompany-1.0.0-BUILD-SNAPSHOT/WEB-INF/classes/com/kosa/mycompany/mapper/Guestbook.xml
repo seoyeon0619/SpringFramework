@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="Guestbook">
+	<!-- 
+	
+	namespace는 쿼리들 간 아이디 식별에 사용하지만 현재는 거의 사용 안함
+	쿼리를 이 파일에 저장
+	태그는 select, insert, update, delete가 있음
+	
+	id는 쿼리를 식별하기위한 고유값인데 프로젝트를 통틀어 하나만 있어야함 
+	다른 쿼리 xml파일에 이 아이디가 있으면 안됨
+	
+	parameterType="클래스명", 파라미터로 전달될 클래스명 기술, 여기에 기술한 파라미터로 값을 전달해야함 
+	
+	mybatis-config.xml에 기술한 typealias에서 지정한 클래스명을 사용하면 됨. 본래는 패키지명을 포함한 클래스명 사용 
+	com.kosa.mycompany.guestbook.Guestbook을 다 기술해야 하지만 보통은 typealias를 지정하고 거기서 지정한 값들 사용 
+	
+	resultType="클래스명", 결과를 받아가고자 하는 클래스명 기술
+	반환데이터를 resultType에서 지정한 클래스로 객체를 만들고 객체에 setter를 호출해 값을 넣고 ArrayList객체에 담아 보냄 
+	
+	만일 DB테이블의 필드명과 클래스 변수명이 다를 경우, 연결하기위한 map이라는 것을 만들어서 전달 
+	그때는 paramMap이나 resultMap을 xml로 만들어서 전달
+	
+	 -->
+	
+	<select id="Guestbook_getList" parameterType="GuestbookDto" resultType="GuestbookDto">
+	select seq, title, writer, contents, to_char(wdate, 'yyyy-mm-dd') wdate, user_name, hit, num
+	from (
+	select seq
+		, title
+		, writer
+		, contents
+		, wdate
+		, hit
+		, user_name
+		, row_number() over(order by seq desc) num
+		, ceil(row_number() over(order by seq desc)/#{pgSize})-1 pg
+	from tb_guestbook A
+	left outer join tb_member B on A.writer=B.user_id
+	) A where A.pg=#{pg}
+	</select>
+	
+	<select id="Guestbook_getTotalCnt" parameterType="GuestbookDto" resultType="Integer">
+	select count(*) from tb_guestbook
+	</select>
+	
+	<select id="Guestbook_getView" parameterType="GuestbookDto" resultType="GuestbookDto">
+	select seq
+		, title
+		, writer
+		, contents
+		, wdate
+		, hit
+		, user_name
+	from tb_guestbook A
+	left outer join tb_member B on A.writer=B.user_id
+	where seq=#{seq}
+	</select>
+	
+	<!-- 선행쿼리, 후행쿼리 : 쿼리 여러개 묶어서 한번에 처리, MyBatis -->
+	<insert id="Guestbook_insert" parameterType="GuestbookDto">
+		<selectKey resultType="String" keyProperty="seq" order="BEFORE">
+		select nvl(max(seq), 0)+1 as seq
+		from tb_guestbook
+		</selectKey>
+		insert into tb_guestbook
+		(
+			seq
+			, title
+			, writer
+			, contents
+			, wdate
+			, hit
+		)
+		values
+		(
+			#{seq}
+			, #{title}
+			, #{writer}
+			, #{contents}
+			, sysdate
+			, 0
+		)
+	</insert>
+</mapper>

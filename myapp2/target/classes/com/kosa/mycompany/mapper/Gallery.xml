@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="Gallery">
+	<select id="Gallery_getList" parameterType="GalleryDto" resultType="GalleryDto">
+	select seq, title, writer, contents, to_char(wdate, 'yyyy-mm-dd') wdate, user_name, hit, num, image1
+	from (
+	select seq
+		, title
+		, writer
+		, contents
+		, wdate
+		, hit
+		, user_name
+		, image1
+		, row_number() over(order by seq desc) num
+		, ceil(row_number() over(order by seq desc)/#{pgSize})-1 pg
+	from tb_Gallery A
+	left outer join tb_member B on A.writer=B.user_id
+		<if test='searchKey.equals("1")'>
+			where title like '%'||#{searchKeyword}||'%' 
+		</if>
+		<if test='searchKey.equals("2")'>
+			where contents like '%'||#{searchKeyword}||'%' 
+		</if>
+		<if test='searchKey.equals("3")'>
+			where title like '%'||#{searchKeyword}||'%' or 
+					contents like '%'||#{searchKeyword}||'%' 
+		</if>
+	) A where A.pg=#{pg}
+	</select>
+	
+	<select id="Gallery_getTotalCnt" parameterType="GalleryDto" resultType="Integer">
+	select count(*) from tb_gallery
+		<if test='searchKey.equals("1")'>
+			where title like '%'||#{searchKeyword}||'%' 
+		</if>
+		<if test='searchKey.equals("2")'>
+			where contents like '%'||#{searchKeyword}||'%' 
+		</if>
+		<if test='searchKey.equals("3")'>
+			where title like '%'||#{searchKeyword}||'%' or 
+					contents like '%'||#{searchKeyword}||'%' 
+		</if>
+	</select>
+	
+	<select id="Gallery_getView" parameterType="GalleryDto" resultType="GalleryDto">
+	select seq
+		, title
+		, writer
+		, contents
+		, wdate
+		, hit
+		, user_name
+		, image1
+	from tb_Gallery A
+	left outer join tb_member B on A.writer=B.user_id
+	where seq=#{seq}
+	</select>
+	
+	<!-- 선행쿼리, 후행쿼리 : 쿼리 여러개 묶어서 한번에 처리, MyBatis -->
+	<insert id="Gallery_insert" parameterType="GalleryDto">
+		<selectKey resultType="String" keyProperty="seq" order="BEFORE">
+		select nvl(max(seq), 0)+1 as seq
+		from tb_Gallery
+		</selectKey>
+		insert into tb_Gallery
+		(
+			seq
+			, title
+			, writer
+			, contents
+			, wdate
+			, hit
+			, image
+		)
+		values
+		(
+			#{seq}
+			, #{title}
+			, #{writer}
+			, #{contents}
+			, sysdate
+			, 0
+			,#{image1}
+		)
+	</insert>
+</mapper>

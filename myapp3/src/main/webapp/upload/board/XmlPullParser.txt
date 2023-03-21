@@ -1,0 +1,8 @@
+			while (what != XmlPullParser.END_DOCUMENT) {
+				if (what == XmlPullParser.START_TAG) {
+					System.out.println(xpp.getName());
+				} else if (what == XmlPullParser.TEXT) {
+					System.out.println(xpp.getText());
+				} else if (what == XmlPullParser.END_TAG) {
+					System.out.println(xpp.getName());
+				}

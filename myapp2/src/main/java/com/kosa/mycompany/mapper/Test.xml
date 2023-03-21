@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="Test">
+
+	<insert id="test1_insert" parameterType="TestDto">
+		<selectKey resultType="String" keyProperty="seq" order="BEFORE">
+		select nvl(max(seq), 0)+1 as seq
+		from test1
+		</selectKey>
+		insert into test1
+		(
+			seq,
+			test
+		)
+		values
+		(
+			#{seq},
+			#{test}
+		)
+	</insert>
+	
+	<insert id="test2_insert" parameterType="TestDto">
+		<selectKey resultType="String" keyProperty="seq" order="BEFORE">
+		select nvl(max(seq), 0)+1 as seq
+		from test2
+		</selectKey>
+		insert into test2
+		(
+			seq,
+			test
+		)
+		values
+		(
+			#{seq},
+			#{test}
+		)
+		
+	</insert>
+	<insert id="test3_insert" parameterType="TestDto">
+		<selectKey resultType="String" keyProperty="seq" order="BEFORE">
+		select nvl(max(seq), 0)+1 as seq
+		from test3
+		</selectKey>
+		insert into test3
+		(
+			seq,
+			test
+		)
+		values
+		(
+			#{seq},
+			#{test}
+		)
+	</insert>
+	
+</mapper>

@@ -1,0 +1,10 @@
+
+2월 06, 2023 18:21:37.89 NEW SESSION
+2월 06, 2023 18:21:37.89 [4156:4260:0206/182137.870:ERROR:device_event_log_impl.cc(215)] [18:21:37.871] Bluetooth: bluetooth_adapter_winrt.cc:1074 Getting Default Adapter failed.
+2월 06, 2023 18:22:32.85 [4156:8656:0206/182232.856:ERROR:util.cc(134)] Can't create base directory: C:\Program Files\Google\GoogleUpdater
+
+2월 14, 2023 10:38:04.19 NEW SESSION
+2월 14, 2023 10:38:04.19 [6732:428:0214/103804.168:ERROR:interface_endpoint_client.cc(695)] Message 1 rejected by interface blink.mojom.WidgetHost
+2월 14, 2023 12:18:20.60 [6732:6080:0214/121820.607:ERROR:connection_factory_impl.cc(472)] ConnectionHandler failed with net error: -2
+2월 14, 2023 12:18:22.60 [6732:6080:0214/121822.606:ERROR:connection_factory_impl.cc(472)] ConnectionHandler failed with net error: -2
+2월 14, 2023 12:29:03.07 [6732:6080:0214/122903.073:ERROR:connection_factory_impl.cc(427)] Failed to connect to MCS endpoint with error -106

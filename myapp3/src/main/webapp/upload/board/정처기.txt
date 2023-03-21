@@ -1,0 +1,96 @@
+정규형!
+
+--------------------------------------------
+#include＜stdio.h＞
+#include＜stdlib.h＞
+int main(int argc, char *argv[ ]) {
+int arr[2][3]＝{1,2,3,4,5,6}；
+int (*p)[3]＝NULL；
+p＝arr；
+printf("%d, ", *(p[0]＋1)＋*(p[1]＋2))；
+printf("%d", *(*(p＋1)＋0)＋*(*(p＋1)＋1))；
+return 0；
+}
+답 8,9
+-------------------------------------------
+▷ 고가용성 솔루션(HACMP)
+- 각 시스템 간에 공유 디스크를 중심으로
+클러스터링으로 엮여 다수의 시스템을 동시에 연결
+- 조직, 기업의 기간 업무 서버 등의 안정성을 높이기 위해 사용
+- 여러가지 방식으로 구현되며 2개의 서버를 연결하는 것으로
+2개의 시스템이 각각 업무를 수행하도록 구현하는 방식
+
+▷ 점대점 연결 방식(Point-to-Point Mode)
+- 네트워크에 있어 물리적으로는 중개 장치를 통과하지 않고
+한 지점에서 다른 지점으로 직접가는 채널
+▷ MultiPoint 접속
+- 하나의 공유된 전송회선에 여러 스테이션을 접속하는 방식
+▷ 스턱스넷(Stuxnet)
+- 
+▷ 루팅(Rooting)
+-------------------------------------------
+#include ＜stdio.h＞
+#include ＜stdlib.h＞
+int main(int argc, char *argv[ ]) {
+　int i＝0；
+　while(1) {
+　　if(i==4) {
+　　　break；
+　　}
+　　＋＋i；
+　}
+　printf("i＝%d", i)；
+　return 0；
+}
+답 i=4
+----------------------------------------------
+
+public class Ape {
+static void rs(char a[ ]) {
+for(int i=0; i＜a.length; i＋＋)
+　if(a[i]=='B')
+　　a[i]='C';
+　else if(i==a.length－1)
+　　a[i]=a[i－1];
+　else 
+	a[i]=a[i＋1];
+}
+
+static void pca(char a[ ]) {
+for(int i=0; i＜a.length; i＋＋)
+　System.out.print(a[i]);
+　System.out.println();
+}
+
+public static void main(String
+[ ] args) {
+　char c[ ]=rs(c)={'A','B','D','D',
+　'A','B','C'};
+　rs(c);
+　pca(c)
+}
+}
+답:BCDABCC
+-----------------------------------------------------
+
+#include ＜stdio.h＞
+#include ＜stdlib.h＞
+int main(int argc, char *argv[ ]) {
+　char str1[20]＝"KOREA"；
+　char str2[20]＝"LOVE"；
+　char* p1＝NULL；
+　char* p2＝NULL；
+　p1＝str1；
+　p2＝str2；
+　str1[1]＝p2[2]；
+　str2[3]＝p1[4]；
+　strcat(str1, str2)；
+　printf("%c", *(p1＋2))；
+　return 0；
+}
+
+답R
+
+
+3개의 페이지 프레임을 갖는 시스템에서 페이지 참조 순서가 1, 2, 1, 0, 4, 1, 3일 경우 
+FIFO 알고리즘에 의한 페이지 교체의 경우 프레임의 최종 상태는? (4,1,3)

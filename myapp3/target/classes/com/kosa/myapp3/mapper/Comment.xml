@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ 
+<mapper namespace="Comment">
+	<select id="Comment_getList"  parameterType="CommentDto" resultType="CommentDto" >
+		select 
+			board_seq
+			, seq
+			, userid
+			, comments
+			, regdate
+			, delyn
+		from tb_comment
+		where delyn='N'
+	</select>
+		
+	<insert id="Comment_insert" parameterType="CommentDto">
+		<selectKey resultType="String" keyProperty="seq" order="BEFORE">
+		select nvl(max(seq), 0)+1 as seq
+		from tb_comment
+		</selectKey>
+		
+		insert into comment
+		(
+			board_seq
+			, seq
+			, userid
+			, comments
+			, regdate
+		)	
+		values
+		(
+			#{board_seq}
+			, #{seq}
+			, #{userid}
+			, #{comments}
+			, sysdate
+		)
+	</insert>
+</mapper>
